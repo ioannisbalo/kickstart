@@ -1,7 +1,8 @@
 {
   "name": "kickstart",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start:dev": "next dev"
   },
   "version": "1.0.0",
   "main": "index.js",
@@ -11,6 +12,9 @@
     "fs-extra": "^9.1.0",
     "ganache-cli": "6.12.2",
     "mocha": "4.0.1",
+    "next": "4.1.4",
+    "react": "^16.0.1",
+    "react-dom": "^16.0.1",
     "solc": "0.4.17",
     "truffle-hdwallet-provider": "0.0.3",
     "web3": "1.0.0-beta.26"

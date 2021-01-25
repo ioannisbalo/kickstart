@@ -1,3 +1,4 @@
 node_modules
 ethereum/build
 ethereum/mnemonic
+.next
