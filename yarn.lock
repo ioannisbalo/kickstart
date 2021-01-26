@@ -5333,6 +5333,13 @@ netrc@^0.1.4:
   resolved "https://registry.yarnpkg.com/netrc/-/netrc-0.1.4.tgz#6be94fcaca8d77ade0a9670dc460914c94472444"
   integrity sha1-a+lPysqNd63gqWcNxGCRTJRHJEQ=
 
+next-routes@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/next-routes/-/next-routes-1.2.0.tgz#be10cd2f3c90421610977e4a12640e2cc75774f4"
+  integrity sha512-ch1pw9iYGb6yfMhe8Ggy6chMhhItJ2od/kfraDUU7JnPwpP+W1sBtQKa0qemmrZhRzk3x9/Ini2X7vOVIDVn8w==
+  dependencies:
+    path-to-regexp "^2.1.0"
+
 next-tick@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
@@ -5963,6 +5970,11 @@ path-to-regexp@^1.0.0:
   integrity sha512-n43JRhlUKUAlibEJhPeir1ncUID16QnEjNpwzNdO3Lm4ywrBpBZ5oLD0I6br9evr1Y9JTqwRtAh7JLoOzAQdVA==
   dependencies:
     isarray "0.0.1"
+
+path-to-regexp@^2.1.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-2.4.0.tgz#35ce7f333d5616f1c1e1bfe266c3aba2e5b2e704"
+  integrity sha512-G6zHoVqC6GGTQkZwF4lkuEyMbVOjoBKAEybQUypI1WTkqinCOrq2x6U2+phkJ1XsEMTy4LjtwPI7HW+NVrRR2w==
 
 path-type@^1.0.0:
   version "1.1.0"
