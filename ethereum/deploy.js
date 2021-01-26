@@ -2,7 +2,6 @@ const HDWalletProvider = require('truffle-hdwallet-provider');
 const Web3 = require('web3');
 const fs = require('fs');
 const compiledFactory = require('./build/CampaignFactory');
-const address = '0xBf9EA7Df999D8E4C765DCBF6ECf307D492f8ffa6';
 
 class Deployer {
   constructor() {
