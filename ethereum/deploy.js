@@ -21,7 +21,7 @@ class Deployer {
         .deploy({ data: compiledFactory.bytecode })
         .send({ from: accounts[0], gas: '1000000' });
   
-      console.log(`Lottery deployed to Rinkby Test Network at ${result.options.address}`);
+      console.log(`CampaignFactory deployed to Rinkby Test Network at ${result.options.address}`);
     } catch (error) {
       console.log(error);
     }
