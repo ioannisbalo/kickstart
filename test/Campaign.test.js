@@ -8,7 +8,7 @@ const compiledCampaign = require('../ethereum/build/Campaign');
 const web3 = new Web3(ganache.provider());
 
 describe('A Campaign', () => {
-  const miminum = '1000000';
+  const minimum = '1000000';
   let factory;
   let accounts;
   let txInfo;
@@ -23,7 +23,7 @@ describe('A Campaign', () => {
       .deploy({ data: compiledFactory.bytecode })
       .send(txInfo);
 
-    await factory.methods.createCampaign(miminum).send(txInfo);
+    await factory.methods.createCampaign(minimum).send(txInfo);
     [campaignAddress] = await factory.methods.getCampaigns().call();
     campaign = new web3.eth.Contract(JSON.parse(compiledCampaign.interface), campaignAddress);
   });
@@ -34,7 +34,7 @@ describe('A Campaign', () => {
     });
   
     it('should be able to create a Campaign', async () => {
-      assert.equal(await campaign.methods.minimum().call(), miminum);
+      assert.equal(await campaign.methods.minimum().call(), minimum);
       assert.equal(await campaign.methods.manager().call(), accounts[0]);
     });
   });
@@ -53,6 +53,13 @@ describe('A Campaign', () => {
 
         assert(newBalance > initialBalance);
         assert(isContributor);
+        assert.equal(await campaign.methods.totalContributors().call(), 1);
+      });
+
+      it('should not increase the contributors count if already contributed', async () => {
+        await campaign.methods.contribute().send({ from: accounts[1], value: '2000000', gas: '1000000' });
+        await campaign.methods.contribute().send({ from: accounts[1], value: '2000000', gas: '1000000' });
+
         assert.equal(await campaign.methods.totalContributors().call(), 1);
       });
 
@@ -170,6 +177,31 @@ describe('A Campaign', () => {
         await campaign.methods.approveRequest(0).send({ from: accounts[4], gas: '1000000'});
         const txResponse = await campaign.methods.finalizeRequest(0).send(txInfo);
         assert.ok(txResponse);
+      });
+    });
+
+    describe('getSummary method', () => {
+      it('should be successful', async () => {
+        const summary = await campaign.methods.getSummary().call();
+        const balance = summary[0];
+        const minimumContribution = summary[1];
+        const totalContributors = summary[2];
+        const requests = summary[3];
+        const manager = summary[4];
+        
+        assert.equal(balance, '0');
+        assert.equal(minimumContribution, minimum);
+        assert.equal(totalContributors, '0');
+        assert.equal(requests, '0');
+        assert.equal(manager, accounts[0]);
+      });
+    });
+
+    describe('getRequestCount method', () => {
+      it('should be successful', async () => {
+        await campaign.methods.createRequest(accounts[3], '100', 'request').send(txInfo);
+
+        assert.equal(await campaign.methods.getRequestCount().call(), '1');
       });
     });
   });

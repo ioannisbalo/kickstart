@@ -46,8 +46,11 @@ contract Campaign {
     
     function contribute() public payable {
         require(msg.value >= minimum);
+
+        if(!contributors[msg.sender]) {
+            totalContributors++;
+        }
         contributors[msg.sender] = true;
-        totalContributors++;
     }
     
     function createRequest(address receiver, uint amount, string description) public adminRestricted {
@@ -80,5 +83,21 @@ contract Campaign {
         
         request.receiver.transfer(request.amount);
         request.complete = true;
+    }
+
+    function getSummary() public view returns(
+        uint, uint, uint, uint, address
+    ) {
+        return (
+            this.balance,
+            minimum,
+            totalContributors,
+            requests.length,
+            manager
+        );
+    }
+
+    function getRequestCount() public view returns(uint) {
+        return requests.length;
     }
 }
