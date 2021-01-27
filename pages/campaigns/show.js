@@ -1,9 +1,10 @@
 import React from 'react';
-import { Card, Grid } from 'semantic-ui-react';
+import { Card, Grid, Button } from 'semantic-ui-react';
 import Layout from '../../components/Layout';
 import web3 from '../../ethereum/web3';
 import Campaign from '../../ethereum/build/Campaign';
 import ContributionForm from '../../components/ContributionForm';
+import { Link } from '../../routes';
 
 export default class ShowCampaign extends React.Component {
   static async getInitialProps({ query }) {
@@ -13,7 +14,7 @@ export default class ShowCampaign extends React.Component {
       await contract.methods.getSummary().call()
     );
 
-    return { contract, summary };
+    return { contract, summary, address };
   }
 
   static formatSummary(summary) {
@@ -39,13 +40,27 @@ export default class ShowCampaign extends React.Component {
     const content = (
       <div>
         <Grid>
-          <Grid.Column width={10} floated='left'>
-            <h3>Campaign Details</h3>
-            {this.renderDetails()}
-          </Grid.Column>
-          <Grid.Column width={6} floated='right'>
-            <ContributionForm onSubmit={this.onSubmit} />
-          </Grid.Column>
+          <Grid.Row>
+            <Grid.Column width={10} floated='left'>
+              <h3>Campaign Details</h3>
+              {this.renderDetails()}
+            </Grid.Column>
+            <Grid.Column width={6} floated='right'>
+              <ContributionForm onSubmit={this.onSubmit} />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Link route={`/campaigns/${this.props.address}/requests`}>
+                <a>
+                  <Button
+                    content='View Requests'
+                    primary
+                    />
+                </a>
+              </Link>
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
       </div>
     );
@@ -84,7 +99,6 @@ export default class ShowCampaign extends React.Component {
   }
 
   onSubmit = async (value) => {
-    console.log(this.state.contract);
     const accounts = await web3.eth.getAccounts();
     await this.state.contract.methods
       .contribute()
